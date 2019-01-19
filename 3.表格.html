@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <meta charset="utf-8"/>
+    <style>
+        /* 此样式仅用于浏览器页面效果，Excel不会分离表格边框，不需要此样式 */
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<!-- 设置border="1"以显示表格框线 -->
+asdfasfdafasdfsd
+<table border="1">
+    <!-- caption元素可以生成表标题，其单元格列跨度为表格的列数 -->
+    <caption>学生成绩表</caption>
+    <tr class="first">
+        <td><input type="checkbox" id="btn"></td>
+        <th>编号</th>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>年龄</th>
+        <th>成绩</th>
+        <th>成绩</th>
+        <th>成绩</th>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>1</td>
+        <td>2016001</td>
+        <td>张三</td>
+        <td>男</td>
+        <td>13</td>
+        <td>85</td>
+        <td>94</td>
+        <td>65</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>2</td>
+        <td>2016002</td>
+        <td>李四</td>
+        <td>女</td>
+        <td>12</td>
+        <td>96</td>
+        <td>84</td>
+        <td>89</td>
+    </tr>
+</table>
+<a>导出表格</a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script>
+  function print(html){
+       var blob = new Blob([html], {type: "application/vnd.ms-excel"});
+       var a = document.getElementsByTagName("a")[0];
+       // 利用URL.createObjectURL()方法为a元素生成blob URL
+       a.href = URL.createObjectURL(blob);
+       // 设置文件名
+       a.download = "学生成绩表.xls";
+   }
+   var $items = $('input:checkbox');
+  $('#btn').click(function () {
+      if(this.checked){
+          $(this).prop('checked', true);
+          $items.prop('checked', true);
+         var html="<html><head><meta charset='utf-8' /></head><body>" + document.getElementsByTagName('table')[0].outerHTML+ "</body></html>";
+          print(html);
+      }else{
+          $(this).prop('checked', false);
+          $items.prop('checked', false)
+      }
+   });
+   //除了表头以外的input改变事件
+$("input:not('#btn')").change(function(){
+    //表头 th
+  var th=$("table tr:first-child").prop("outerHTML");
+   var hts=th;
+   $("input:checkbox:checked").each(function(index,element){
+        if($(this).parent().parent().prop("outerHTML")!=th){
+            var tr=  $(this).parent().parent().prop("outerHTML");
+            hts +=tr;
+        }
+    });
+    var html = "<html><head><meta charset='utf-8' /></head><body><table>" + hts + "</table></body></html>";
+    print(html);
+    console.log( hts);
+})
+
+
+
+</script>
+</body>
+</html>
