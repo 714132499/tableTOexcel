@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="jquery.table2excel.min.js"></script>
+</head>
+<body>
+<table id="output">
+    <tr>
+        <th></th>
+        <th>NAME</th>
+        <th>AGE</th>
+        <th>ID</th>
+        <th>scores</th>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>Jack</td>
+        <td>15</td>
+        <td>6532</td>
+        <td>107</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>Tom</td>
+        <td>12</td>
+        <td>622</td>
+        <td>75</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>HAsh</td>
+        <td>15</td>
+        <td>34532</td>
+        <td>65</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>YYX</td>
+        <td>15</td>
+        <td>4534</td>
+        <td>67</td>
+    </tr>
+</table>
+<button id="daochu" type="button">导出</button>
+<script>
+    $("#daochu").click(function () {
+        $('#output').table2excel({
+            exclude: "input[type='checkbox']:not(:checked)",//标记不导出行的CSS，用到td上会导致后面的td前移
+            name: 'ExcelDocumentName',
+            filename: 'my-FileName',                //生成文件名
+            fileext: 'xls',                      //导出文件后缀，似乎也没什么用，IE保存没有后缀名
+            exclude_img: false,                  //是否导出图片
+            exclude_links: false,                //是否导出链接
+            exclude_inputs: false                //是否导出文本框内容
+        })
+    })
+</script>
+</body>
+</html>
